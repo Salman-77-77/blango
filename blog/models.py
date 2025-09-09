@@ -13,7 +13,7 @@ class Comment(models.Model):
     content_object = GenericForeignKey("content_type", "object_id")
     created_at = models.DateTimeField(auto_now_add=True)
     modified_at = models.DateTimeField(auto_now=True)
-class Tag(models.Model):
+class Tag(models.Model): 
     value = models.TextField(max_length=100)
 
     def __str__(self):
