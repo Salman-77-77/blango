@@ -11,6 +11,8 @@ https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 
 import os
+import mimetypes
+
 from pathlib import Path
 from configurations import Configuration
 from configurations import values
@@ -29,6 +31,10 @@ class Dev(Configuration):
 
   # SECURITY WARNING: don't run with debug turned on in production!
   DEBUG = True
+  
+
+# Fixes MIME type issue for toolbar's JavaScript files
+  mimetypes.add_type("application/javascript", ".js", True)
 
   ALLOWED_HOSTS = ['*']
   X_FRAME_OPTIONS = 'ALLOW-FROM ' + os.environ.get('CODIO_HOSTNAME') + '-8000.codio.io'
@@ -78,9 +84,15 @@ class Dev(Configuration):
       'blog',
       'crispy_forms',
       'crispy_bootstrap5',
+      "debug_toolbar",
   ]
 
+  INTERNAL_IPS = type(str('c'), (), {'__contains__': lambda *a: True})()
+
+
   MIDDLEWARE = [
+      
+      "debug_toolbar.middleware.DebugToolbarMiddleware",
       'django.middleware.security.SecurityMiddleware',
       'django.contrib.sessions.middleware.SessionMiddleware',
       'django.middleware.common.CommonMiddleware',
@@ -166,3 +178,4 @@ class Dev(Configuration):
   DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
   CRISPY_ALLOWED_TEMPLATE_PACKS = "bootstrap5"
   CRISPY_TEMPLATE_PACK = "bootstrap5"
+
