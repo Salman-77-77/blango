@@ -32,6 +32,7 @@ class Dev(Configuration):
   # SECURITY WARNING: don't run with debug turned on in production!
   DEBUG = True
   
+  AUTH_USER_MODEL = "blango_auth.User"
 
 # Fixes MIME type issue for toolbar's JavaScript files
   mimetypes.add_type("application/javascript", ".js", True)
@@ -85,6 +86,7 @@ class Dev(Configuration):
       'crispy_forms',
       'crispy_bootstrap5',
       "debug_toolbar",
+      'blango_auth',
   ]
 
   INTERNAL_IPS = type(str('c'), (), {'__contains__': lambda *a: True})()
