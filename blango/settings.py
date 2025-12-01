@@ -77,6 +77,7 @@ class Dev(Configuration):
  
   INSTALLED_APPS = [
       'django.contrib.admin',
+      'django.contrib.sites',
       'django.contrib.auth',
       'django.contrib.contenttypes',
       'django.contrib.sessions',
@@ -87,8 +88,17 @@ class Dev(Configuration):
       'crispy_bootstrap5',
       "debug_toolbar",
       'blango_auth',
+      "allauth", 
+      "allauth.account", 
+      "allauth.socialaccount",
+      "allauth.socialaccount.providers.google",
   ]
-
+  
+  SITE_ID = 2
+  ACCOUNT_USER_MODEL_USERNAME_FIELD = None
+  ACCOUNT_EMAIL_REQUIRED = True
+  ACCOUNT_USERNAME_REQUIRED = False
+  ACCOUNT_AUTHENTICATION_METHOD = "email"
   INTERNAL_IPS = type(str('c'), (), {'__contains__': lambda *a: True})()
 
 
@@ -183,3 +193,18 @@ class Dev(Configuration):
 
   EMAIL_BACKEND = "django.core.mail.backends.console.EmailBackend"
   ACCOUNT_ACTIVATION_DAYS = 7
+
+  SOCIALACCOUNT_PROVIDERS = {
+    'google': {
+        'SCOPE': [
+            'profile',
+            'email',
+        ],
+        'AUTH_PARAMS': {
+            'access_type': 'online',
+        },
+        'OAUTH_PKCE_ENABLED': True,
+    }
+}
+   
+  
